@@ -17,6 +17,8 @@ public class GardenController {
     @FXML
     private Pane theGarden;                 // capture the pane we are drawing on from JavaFX
 
+    private Flower flower;
+
     @FXML
     public void initialize() {              // executed after scene is loaded but before any methods
         // for fun, set up a gradient background; could probably do in SceneBuilder as well
@@ -36,6 +38,7 @@ public class GardenController {
         beeYLocation = 200;                 //     capture this in an object
         theGarden.getChildren().add(beeImageBox); // place bee on the panel
         displayBee();
+        displayFlower();
         theGarden.setFocusTraversable(true); // ensure garden pane will receive keypresses
     }
 
@@ -54,6 +57,10 @@ public class GardenController {
         beeImageBox.setLayoutY(beeYLocation);
     }
 
+    private void displayFlower() {
+        flower = new Flower(this.theGarden);
+    }
+
     @FXML
     public void onKeyPressed(KeyEvent keyEvent) {
         if (keyEvent.getCode() == KeyCode.RIGHT) {
@@ -67,4 +74,5 @@ public class GardenController {
         }
         displayBee();
     }
+
 }
