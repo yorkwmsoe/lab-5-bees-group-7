@@ -15,6 +15,9 @@ public class Flower {
 
     private int currentEnergy;
 
+    private final int xOffset = 150;
+    private final int yOffset = 137;
+
     public Flower(Pane gardenPane) {
         this.gardenPane = gardenPane;
         maxEnergy = 100;
@@ -42,8 +45,8 @@ public class Flower {
             flowerImage.setPreserveRatio(true);
             flowerImage.setFitWidth(75);
             //this sets the image of the flower to a random location within the main pane
-            flowerImageBox.setLayoutX((int) (Math.random() * 500));
-            flowerImageBox.setLayoutY((int) (Math.random() * 500));
+            flowerImageBox.setLayoutX((int) (Math.random() * 300) + xOffset);
+            flowerImageBox.setLayoutY((int) (Math.random() * 300) + yOffset);
 
             flowerImageBox.getChildren().addAll(flowerImage, flowerLabel);
             gardenPane.getChildren().add(flowerImageBox);
