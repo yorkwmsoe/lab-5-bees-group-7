@@ -12,10 +12,16 @@ import javafx.scene.layout.VBox;
 public class GardenController {
 
     private Pane beeImageBox;               // box containing bee and it's label; NOT a good domain name!
+
+    private Pane legendImageBox;            // box containing legend
     private double beeXLocation, beeYLocation;  // drawn location of bee; this should be in a domain class
 
     @FXML
     private Pane theGarden;                 // capture the pane we are drawing on from JavaFX
+
+    private Flower flower;
+
+    private Pane legendPane;
 
     @FXML
     public void initialize() {              // executed after scene is loaded but before any methods
@@ -24,18 +30,23 @@ public class GardenController {
         theGarden.setStyle("-fx-background-color: linear-gradient(to bottom right, derive(forestgreen, 20%), derive(forestgreen, -40%));");
         // load image from a file; the file needs to be in the top folder of the project
         ImageView beeImage = new ImageView(new Image("file:bee-1.jpg")); // draws bee
+        ImageView legendImage = new ImageView(new Image("file:legend.jpg")); // draws legend
+        legendImage.setPreserveRatio(true);
+        legendImage.setFitWidth(150.0);
         beeImage.setPreserveRatio(true);    // ensure ratio preserved when scaling the bee
         beeImage.setFitWidth(50.0);         // scale bee to be a reasonable size
         Label beeLabel = new Label();       // you might make this an attribute of another class so you can update it
         beeLabel.setText("Some Bee");
         beeLabel.setStyle("-fx-text-fill: blue;");
+        legendImageBox = new VBox(legendImage);
         beeImageBox = new VBox();
         beeImageBox.getChildren().add(beeImage);
         beeImageBox.getChildren().add(beeLabel);
         beeXLocation = 100;                 // initial location of bee; for your solution,
         beeYLocation = 200;                 //     capture this in an object
-        theGarden.getChildren().add(beeImageBox); // place bee on the panel
+        theGarden.getChildren().addAll(beeImageBox, legendImageBox); // place bee on the panel
         displayBee();
+        displayFlower();
         theGarden.setFocusTraversable(true); // ensure garden pane will receive keypresses
     }
 
@@ -54,6 +65,10 @@ public class GardenController {
         beeImageBox.setLayoutY(beeYLocation);
     }
 
+    private void displayFlower() {
+        flower = new Flower(this.theGarden);
+    }
+
     @FXML
     public void onKeyPressed(KeyEvent keyEvent) {
         if (keyEvent.getCode() == KeyCode.RIGHT) {
@@ -67,4 +82,5 @@ public class GardenController {
         }
         displayBee();
     }
+
 }
