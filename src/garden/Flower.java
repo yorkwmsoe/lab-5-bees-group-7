@@ -15,8 +15,6 @@ public class Flower {
 
     private int currentEnergy;
 
-    GardenController garden = new GardenController();
-
     public Flower(Pane gardenPane) {
         this.gardenPane = gardenPane;
         maxEnergy = 100;
