@@ -1,5 +1,6 @@
 package garden;
 
+import javafx.geometry.Point2D;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,6 +15,9 @@ public class Flower {
     private Pane gardenPane;
 
     private int currentEnergy;
+
+    private final int xOffset = 150;
+    private final int yOffset = 137;
 
     public Flower(Pane gardenPane) {
         this.gardenPane = gardenPane;
@@ -42,8 +46,8 @@ public class Flower {
             flowerImage.setPreserveRatio(true);
             flowerImage.setFitWidth(75);
             //this sets the image of the flower to a random location within the main pane
-            flowerImageBox.setLayoutX((int) (Math.random() * 500));
-            flowerImageBox.setLayoutY((int) (Math.random() * 500));
+            flowerImageBox.setLayoutX((int) (Math.random() * 300) + xOffset);
+            flowerImageBox.setLayoutY((int) (Math.random() * 300) + yOffset);
 
             flowerImageBox.getChildren().addAll(flowerImage, flowerLabel);
             gardenPane.getChildren().add(flowerImageBox);
@@ -54,6 +58,10 @@ public class Flower {
 
     public void exchangeEnergy(Bee bee) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Point2D getFlowerLocation() {
+        return new Point2D(flowerImageBox.getLayoutX(), flowerImageBox.getLayoutY());
     }
 
 
