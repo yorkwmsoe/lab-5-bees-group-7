@@ -42,8 +42,8 @@ public class Flower {
             flowerImage.setPreserveRatio(true);
             flowerImage.setFitWidth(75);
             //this sets the image of the flower to a random location within the main pane
-            flowerImageBox.setLayoutX((int) (Math.random() * 525));
-            flowerImageBox.setLayoutY((int) (Math.random() * 525));
+            flowerImageBox.setLayoutX((int) (Math.random() * 500));
+            flowerImageBox.setLayoutY((int) (Math.random() * 500));
 
             flowerImageBox.getChildren().addAll(flowerImage, flowerLabel);
             gardenPane.getChildren().add(flowerImageBox);
