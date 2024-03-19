@@ -12,8 +12,39 @@ import java.util.Set;
 
 public class Garden {
     private final Set<Flower> flowerBed;
+<<<<<<< Updated upstream
+=======
+    private final Set<Bee> beeHive;
 
-    private Set<Bee> beeHive;
+
+    public Garden(Pane gardenPane) {
+        this.flowerBed= new HashSet<>();
+        for(int i = 0; i < 5; i++) {
+            NectarExchanger flowerNectar = i % 2 == 0? new BalancedNectar() : new NectarGiving();
+            flowerBed.add(new Flower(gardenPane, flowerNectar));
+        }
+
+        this.beeHive = new HashSet<>();
+        MovementPattern straightLine = new StraightLine();
+        Bee straightLineBee = new Bee(10, 100, this.getNextFlowerTarget(), straightLine);
+        this.beeHive.add(straightLineBee);
+        gardenPane.getChildren().add(straightLineBee.getBeeView());
+    }
+
+    public Flower getNextFlowerTarget() {
+        int flower = new Random().nextInt(flowerBed.size());
+        int i = 0;
+        Flower target = (Flower) flowerBed.toArray()[0];
+        for(Flower f : flowerBed) {
+            if(i == flower) {
+                return f;
+            }
+            i++;
+        }
+        return target;
+    }
+>>>>>>> Stashed changes
+
 
 
     public Garden(Pane gardenPane) {
@@ -39,6 +70,10 @@ public class Garden {
 
 
     public void step() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        for(Bee bee: beeHive) {
+            if(bee.move()) {
+                bee.setNewTarget(getNextFlowerTarget());
+            }
+        }
     }
 }
