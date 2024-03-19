@@ -32,7 +32,7 @@ public class Flower {
     private void generateFlower() {
         ImageView flowerImage;
         Label flowerLabel;
-        VBox flowerImageBox = new VBox();
+        this.flowerImageBox = new VBox();
         //generate number between 1 and 5
         int i = (int) (Math.random() * 5) + 1;
         //randomly select a flower image to display
@@ -49,10 +49,11 @@ public class Flower {
         flowerImage.setPreserveRatio(true);
         flowerImage.setFitWidth(75);
         //this sets the image of the flower to a random location within the main pane
-        flowerImageBox.setLayoutX((int) (Math.random() * 300) + xOffset);
-        flowerImageBox.setLayoutY((int) (Math.random() * 300) + yOffset);
-        flowerImageBox.getChildren().addAll(flowerImage, flowerLabel);
-        gardenPane.getChildren().add(flowerImageBox);
+        this.flowerImageBox.setLayoutX((int) (Math.random() * 300) + xOffset);
+        this.flowerImageBox.setLayoutY((int) (Math.random() * 300) + yOffset);
+        this.flowerImageBox.getChildren().addAll(flowerImage, flowerLabel);
+        gardenPane.getChildren().add(this.flowerImageBox);
+
 
 
     }
@@ -64,7 +65,7 @@ public class Flower {
     }
 
     public Point2D getFlowerLocation() {
-        return new Point2D(flowerImageBox.getLayoutX(), flowerImageBox.getLayoutY());
+        return new Point2D(this.flowerImageBox.getLayoutX(), this.flowerImageBox.getLayoutY());
     }
 
 

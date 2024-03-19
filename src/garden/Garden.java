@@ -12,8 +12,7 @@ import java.util.Set;
 
 public class Garden {
     private final Set<Flower> flowerBed;
-
-    private Set<Bee> beeHive;
+    private final Set<Bee> beeHive;
 
 
     public Garden(Pane gardenPane) {
@@ -22,6 +21,12 @@ public class Garden {
             NectarExchanger flowerNectar = i % 2 == 0? new BalancedNectar() : new NectarGiving();
             flowerBed.add(new Flower(gardenPane, flowerNectar));
         }
+
+        this.beeHive = new HashSet<>();
+        MovementPattern straightLine = new StraightLine();
+        Bee straightLineBee = new Bee(10, 100, this.getNextFlowerTarget(), straightLine);
+        this.beeHive.add(straightLineBee);
+        gardenPane.getChildren().add(straightLineBee.getBeeView());
     }
 
     public Flower getNextFlowerTarget() {
@@ -37,8 +42,11 @@ public class Garden {
         return target;
     }
 
-
     public void step() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        for(Bee bee: beeHive) {
+            if(bee.move()) {
+                bee.setNewTarget(getNextFlowerTarget());
+            }
+        }
     }
 }
