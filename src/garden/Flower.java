@@ -12,6 +12,8 @@ public class Flower {
 
     private Pane flowerImageBox;
 
+    private NectarExchanger nectarExchanger;
+
     private Pane gardenPane;
 
     private int currentEnergy;
@@ -19,45 +21,46 @@ public class Flower {
     private final int xOffset = 150;
     private final int yOffset = 137;
 
-    public Flower(Pane gardenPane) {
+    public Flower(Pane gardenPane, NectarExchanger nectarExchanger) {
+        this.nectarExchanger = nectarExchanger;
         this.gardenPane = gardenPane;
         maxEnergy = 100;
         currentEnergy = 100;
-        generateFlowers();
+        generateFlower();
     }
 
-    private void generateFlowers() {
+    private void generateFlower() {
         ImageView flowerImage;
         Label flowerLabel;
-        int numFlowers= (int) (Math.random() * 5 + 1); //generates a random number of flowers between 1 and 5
-        for (int i = 0; i < numFlowers; i++) {
-            VBox flowerImageBox = new VBox();
-            //randomly select a flower image to display
-            if (i % 2 == 0) {
-                flowerImage = new ImageView(new Image("file:flower-2.jpg"));
-                flowerLabel = new Label("Pink Flower");
-                flowerLabel.setStyle("-fx-text-fill: pink;");
-            }
-            else {
-                flowerImage = new ImageView(new Image("file:flower-1.jpg"));
-                flowerLabel = new Label("Yellow Flower");
-                flowerLabel.setStyle("-fx-text-fill: yellow;");
-            }
-            flowerImage.setPreserveRatio(true);
-            flowerImage.setFitWidth(75);
-            //this sets the image of the flower to a random location within the main pane
-            flowerImageBox.setLayoutX((int) (Math.random() * 300) + xOffset);
-            flowerImageBox.setLayoutY((int) (Math.random() * 300) + yOffset);
-
-            flowerImageBox.getChildren().addAll(flowerImage, flowerLabel);
-            gardenPane.getChildren().add(flowerImageBox);
-
+        VBox flowerImageBox = new VBox();
+        //generate number between 1 and 5
+        int i = (int) (Math.random() * 5) + 1;
+        //randomly select a flower image to display
+        if (i % 2 == 0) {
+            flowerImage = new ImageView(new Image("file:flower-2.jpg"));
+            flowerLabel = new Label("Pink Flower");
+            flowerLabel.setStyle("-fx-text-fill: pink;");
         }
+        else {
+            flowerImage = new ImageView(new Image("file:flower-1.jpg"));
+            flowerLabel = new Label("Yellow Flower");
+            flowerLabel.setStyle("-fx-text-fill: yellow;");
+        }
+        flowerImage.setPreserveRatio(true);
+        flowerImage.setFitWidth(75);
+        //this sets the image of the flower to a random location within the main pane
+        flowerImageBox.setLayoutX((int) (Math.random() * 300) + xOffset);
+        flowerImageBox.setLayoutY((int) (Math.random() * 300) + yOffset);
+        flowerImageBox.getChildren().addAll(flowerImage, flowerLabel);
+        gardenPane.getChildren().add(flowerImageBox);
+
 
     }
 
-    public void exchangeEnergy(Bee bee) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public int exchangeEnergy(int beeEnergy) {
+        int nectarAmount = nectarExchanger.exchangeNectar(beeEnergy, currentEnergy);
+        currentEnergy -= nectarAmount;
+        return nectarAmount;
     }
 
     public Point2D getFlowerLocation() {

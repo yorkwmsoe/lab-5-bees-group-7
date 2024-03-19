@@ -13,6 +13,8 @@ public class GardenController {
 
     private Pane beeImageBox;               // box containing bee and it's label; NOT a good domain name!
 
+    private Garden garden;
+
     private Pane legendImageBox;            // box containing legend
     private double beeXLocation, beeYLocation;  // drawn location of bee; this should be in a domain class
 
@@ -22,6 +24,7 @@ public class GardenController {
     private Flower flower;
 
     private Pane legendPane;
+
 
     @FXML
     public void initialize() {              // executed after scene is loaded but before any methods
@@ -46,7 +49,7 @@ public class GardenController {
         beeYLocation = 200;                 //     capture this in an object
         theGarden.getChildren().addAll(beeImageBox, legendImageBox); // place bee on the panel
         displayBee();
-        displayFlower();
+        garden = new Garden(theGarden);
         theGarden.setFocusTraversable(true); // ensure garden pane will receive keypresses
     }
 
@@ -65,9 +68,6 @@ public class GardenController {
         beeImageBox.setLayoutY(beeYLocation);
     }
 
-    private void displayFlower() {
-        flower = new Flower(this.theGarden);
-    }
 
     @FXML
     public void onKeyPressed(KeyEvent keyEvent) {
@@ -82,5 +82,6 @@ public class GardenController {
         }
         displayBee();
     }
+
 
 }

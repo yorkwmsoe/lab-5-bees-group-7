@@ -2,7 +2,10 @@ package garden;
 public class NectarGiving implements NectarExchanger {
 
     @Override
-    public void exchangeNectar(Bee bee, int nectarAmount) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public int exchangeNectar(int beeEnergy, int flowerEnergy) {
+        if (flowerEnergy > 0) {
+            return flowerEnergy;
+        }
+        return -1;
     }
 }
