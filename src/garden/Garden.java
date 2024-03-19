@@ -17,9 +17,10 @@ public class Garden {
 
     public Garden(Pane gardenPane) {
         this.flowerBed= new HashSet<>();
-        for(int i = 0; i < 5; i++) {
+        int offset = 50;
+        for(int i = 1; i < 6; i++) {
             NectarExchanger flowerNectar = i % 2 == 0? new BalancedNectar() : new NectarGiving();
-            flowerBed.add(new Flower(gardenPane, flowerNectar));
+            flowerBed.add(new Flower(gardenPane, flowerNectar, offset * i));
         }
 
         this.beeHive = new HashSet<>();

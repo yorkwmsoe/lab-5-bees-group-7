@@ -20,14 +20,19 @@ public class Flower {
     private int currentEnergy;
 
     private ProgressIndicator progressIndicator;
-    private final int xOffset = 150;
-    private final int yOffset = 137;
+    private int xOffset;
+    private int yOffset;
+
+    private int offset;
 
     private boolean flowerEmpty;
 
-    public Flower(Pane gardenPane, NectarExchanger nectarExchanger) {
+    public Flower(Pane gardenPane, NectarExchanger nectarExchanger, int offset) {
         this.nectarExchanger = nectarExchanger;
         this.gardenPane = gardenPane;
+        xOffset = 150;
+        yOffset = 137;
+        this.offset = offset;
         maxEnergy = 100;
         currentEnergy = 100;
         flowerEmpty = false;
@@ -55,12 +60,11 @@ public class Flower {
         }
         flowerImage.setPreserveRatio(true);
         flowerImage.setFitWidth(75);
-        //this sets the image of the flower to a random location within the main pane
-        this.flowerImageBox.setLayoutX((int) (Math.random() * 300) + xOffset);
-        this.flowerImageBox.setLayoutY((int) (Math.random() * 300) + yOffset);
+
+        this.flowerImageBox.setLayoutX((int) (Math.random() * offset) + xOffset);
+        this.flowerImageBox.setLayoutY((int) (Math.random() * offset) + yOffset);
         this.flowerImageBox.getChildren().addAll(progressIndicator, flowerImage, flowerLabel);
         gardenPane.getChildren().add(this.flowerImageBox);
-
 
 
     }
