@@ -57,8 +57,10 @@ public class Flower {
 
     }
 
-    public void exchangeEnergy(Bee bee) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public int exchangeEnergy(int beeEnergy) {
+        int nectarAmount = nectarExchanger.exchangeNectar(beeEnergy, currentEnergy);
+        currentEnergy -= nectarAmount;
+        return nectarAmount;
     }
 
     public Point2D getFlowerLocation() {

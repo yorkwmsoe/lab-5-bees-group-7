@@ -1,5 +1,5 @@
 package garden;
 public interface NectarExchanger {
 
-    public void exchangeNectar(Bee bee, int nectarAmount);
+    public int exchangeNectar(int beeEnergy, int flowerEnergy);
 }
