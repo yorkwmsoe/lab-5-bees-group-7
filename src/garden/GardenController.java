@@ -39,16 +39,6 @@ public class GardenController {
         legendImage.setPreserveRatio(true);
         legendImage.setFitWidth(150.0);
         legendImageBox = new VBox(legendImage);
-<<<<<<< Updated upstream
-        beeImageBox = new VBox();
-        beeImageBox.getChildren().add(beeImage);
-        beeImageBox.getChildren().add(beeLabel);
-        beeXLocation = 100;                 // initial location of bee; for your solution,
-        beeYLocation = 200;                 //     capture this in an object
-        theGarden.getChildren().addAll(beeImageBox, legendImageBox); // place bee on the panel
-        displayBee();
-=======
->>>>>>> Stashed changes
         garden = new Garden(theGarden);
         theGarden.setFocusTraversable(true); // ensure garden pane will receive keypresses
     }
