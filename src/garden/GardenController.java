@@ -36,6 +36,7 @@ public class GardenController {
         legendImage.setFitWidth(150.0);
         legendImageBox = new VBox(legendImage);
         garden = new Garden(theGarden);
+        theGarden.getChildren().add(legendImageBox);
         theGarden.setFocusTraversable(true); // ensure garden pane will receive keypresses
     }
 

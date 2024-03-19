@@ -2,6 +2,7 @@ package garden;
 
 import javafx.geometry.Point2D;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -18,18 +19,24 @@ public class Flower {
 
     private int currentEnergy;
 
+    private ProgressIndicator progressIndicator;
     private final int xOffset = 150;
     private final int yOffset = 137;
+
+    private boolean flowerEmpty;
 
     public Flower(Pane gardenPane, NectarExchanger nectarExchanger) {
         this.nectarExchanger = nectarExchanger;
         this.gardenPane = gardenPane;
         maxEnergy = 100;
         currentEnergy = 100;
+        flowerEmpty = false;
         generateFlower();
     }
 
     private void generateFlower() {
+        progressIndicator = new ProgressIndicator(0);
+        progressIndicator.setVisible(false);
         ImageView flowerImage;
         Label flowerLabel;
         this.flowerImageBox = new VBox();
@@ -51,7 +58,7 @@ public class Flower {
         //this sets the image of the flower to a random location within the main pane
         this.flowerImageBox.setLayoutX((int) (Math.random() * 300) + xOffset);
         this.flowerImageBox.setLayoutY((int) (Math.random() * 300) + yOffset);
-        this.flowerImageBox.getChildren().addAll(flowerImage, flowerLabel);
+        this.flowerImageBox.getChildren().addAll(progressIndicator, flowerImage, flowerLabel);
         gardenPane.getChildren().add(this.flowerImageBox);
 
 
@@ -61,11 +68,27 @@ public class Flower {
     public int exchangeEnergy(int beeEnergy) {
         int nectarAmount = nectarExchanger.exchangeNectar(beeEnergy, currentEnergy);
         currentEnergy -= nectarAmount;
+        if (currentEnergy <= 0) {
+            flowerEmpty = true;
+            currentEnergy = 0;
+            progressIndicator.setVisible(true);
+        }
         return nectarAmount;
     }
 
     public Point2D getFlowerLocation() {
         return new Point2D(this.flowerImageBox.getLayoutX(), this.flowerImageBox.getLayoutY());
+    }
+
+    public void refillFlower() {
+        if (flowerEmpty) {
+            currentEnergy++;
+            progressIndicator.setProgress((currentEnergy * 1.0) / maxEnergy);
+        }
+        if(currentEnergy == maxEnergy) {
+            flowerEmpty = false;
+            progressIndicator.setVisible(false);
+        }
     }
 
 

@@ -48,5 +48,8 @@ public class Garden {
                 bee.setNewTarget(getNextFlowerTarget());
             }
         }
+        for(Flower flower: flowerBed) {
+            flower.refillFlower();
+        }
     }
 }
