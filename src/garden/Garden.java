@@ -1,10 +1,6 @@
 package garden;
 
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 
 import java.util.HashSet;
 import java.util.Random;
@@ -19,7 +15,7 @@ public class Garden {
         this.flowerBed= new HashSet<>();
         int offset = 50;
         for(int i = 1; i < 6; i++) {
-            NectarExchanger flowerNectar = i % 2 == 0? new BalancedNectar() : new NectarGiving();
+            NectarExchanger flowerNectar = i % 2 == 0? new RemovingNectar() : new NectarGiving();
             flowerBed.add(new Flower(gardenPane, flowerNectar, offset * i));
         }
 
