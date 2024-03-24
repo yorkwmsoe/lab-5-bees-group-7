@@ -1,12 +1,14 @@
 package garden.bees;
 
 import garden.Flower;
+import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
-import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -44,6 +46,15 @@ public class BeeView {
         this.totalView.setLayoutX(startingLocation.getX());
         this.totalView.setLayoutY(startingLocation.getY());
 
+        this.totalView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if(mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+                    die();
+                }
+            }
+        });
+
         this.collisionConstant = 10.0 * Math.sqrt(2);
     }
 
@@ -73,7 +84,7 @@ public class BeeView {
         this.totalView.getChildren().remove(beeName);
         this.totalView.getChildren().remove(beeImage);
         this.totalView.getChildren().remove(energyBar);
-        Group garden = (Group) this.totalView.getParent();
+        Pane garden = (Pane) this.totalView.getParent();
         garden.getChildren().remove(this.totalView);
     }
 
