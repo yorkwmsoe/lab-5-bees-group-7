@@ -1,5 +1,7 @@
 package garden;
 
+import garden.bees.*;
+import javafx.geometry.Point2D;
 import javafx.scene.layout.Pane;
 
 import java.util.HashSet;
@@ -8,7 +10,7 @@ import java.util.Set;
 
 public class Garden {
     private final Set<Flower> flowerBed;
-    private final Set<Bee> beeHive;
+    private final Set<BasicBeeController> beeHive;
 
 
     public Garden(Pane gardenPane) {
@@ -20,10 +22,14 @@ public class Garden {
         }
 
         this.beeHive = new HashSet<>();
-        MovementPattern straightLine = new StraightLine();
-        Bee straightLineBee = new Bee(10, 100, this.getNextFlowerTarget(), straightLine);
+        BasicBeeController straightLineBee = new DirectBee(new Point2D(200, 200));
+        straightLineBee.setNewTarget(this.getNextFlowerTarget());
+        BasicBeeController manhattanBee = new ManhattanBee(new Point2D(400, 400));
+        manhattanBee.setNewTarget(this.getNextFlowerTarget());
         this.beeHive.add(straightLineBee);
-        gardenPane.getChildren().add(straightLineBee.getBeeView());
+        this.beeHive.add(manhattanBee);
+        gardenPane.getChildren().add(straightLineBee.getBeeView().getView());
+        gardenPane.getChildren().add(manhattanBee.getBeeView().getView());
     }
 
     public Flower getNextFlowerTarget() {
@@ -40,7 +46,7 @@ public class Garden {
     }
 
     public void step() {
-        for(Bee bee: beeHive) {
+        for(BasicBeeController bee: beeHive) {
             if(bee.move()) {
                 bee.setNewTarget(getNextFlowerTarget());
             }
