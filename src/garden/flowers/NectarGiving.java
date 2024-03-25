@@ -1,4 +1,7 @@
-package garden;
+package garden.flowers;
+
+import garden.flowers.NectarExchanger;
+
 public class NectarGiving implements NectarExchanger {
 
     @Override

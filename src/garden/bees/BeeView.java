@@ -1,6 +1,5 @@
 package garden.bees;
 
-import garden.Flower;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Label;
@@ -22,6 +21,8 @@ public class BeeView {
 
     private final Label beeName;
 
+    private boolean deleted;
+
     private final double collisionConstant;
 
     public BeeView(String imagePath, String name, Point2D startingLocation) {
@@ -29,7 +30,7 @@ public class BeeView {
 
         this.beeImage = new ImageView(new Image(imagePath));
         this.beeImage.setPreserveRatio(true);
-        this.beeImage.setFitHeight(50.0);
+        this.beeImage.setFitWidth(50.0);
 
         this.beeName = new Label();
         this.beeName.setText(name);
@@ -55,6 +56,8 @@ public class BeeView {
             }
         });
 
+        this.deleted = false;
+
         this.collisionConstant = 10.0 * Math.sqrt(2);
     }
 
@@ -74,18 +77,23 @@ public class BeeView {
         this.totalView.relocate(newLocation.getX(), newLocation.getY());
     }
 
-    public boolean collides(Flower flower) {
-        double xDistance = Math.abs(this.totalView.getLayoutX() - flower.getFlowerLocation().getX());
-        double yDistance = Math.abs(this.totalView.getLayoutY() - flower.getFlowerLocation().getY());
+    public boolean collides(Point2D testPoint) {
+        double xDistance = Math.abs(this.totalView.getLayoutX() - testPoint.getX());
+        double yDistance = Math.abs(this.totalView.getLayoutY() - testPoint.getY());
         return Math.hypot(xDistance, yDistance) < this.collisionConstant;
     }
 
     public void die() {
+        this.deleted = true;
         this.totalView.getChildren().remove(beeName);
         this.totalView.getChildren().remove(beeImage);
         this.totalView.getChildren().remove(energyBar);
         Pane garden = (Pane) this.totalView.getParent();
         garden.getChildren().remove(this.totalView);
+    }
+
+    public boolean isDeleted() {
+        return deleted;
     }
 
     public Pane getView() {

@@ -1,4 +1,4 @@
-package garden;
+package garden.flowers;
 
 import javafx.geometry.Point2D;
 import javafx.scene.control.Label;

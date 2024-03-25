@@ -1,12 +1,13 @@
 package garden.bees;
 
-import garden.Flower;
+import garden.flowers.AbstractFlower;
 import javafx.geometry.Point2D;
+import javafx.scene.layout.Pane;
 
-public abstract class BasicBeeController {
+public abstract class AbstractBee {
 
     protected BeeView beeView;
-    protected Flower target;
+    protected AbstractFlower target;
     protected final int speed;
     protected final int maxEnergy;
     protected int currentEnergy;
@@ -14,7 +15,7 @@ public abstract class BasicBeeController {
 
     protected Point2D currentLocation;
 
-    protected BasicBeeController(int speed, int maxEnergy, Point2D startingLocation) {
+    protected AbstractBee(int speed, int maxEnergy, Point2D startingLocation) {
         this.speed = speed;
         this.maxEnergy = maxEnergy;
         this.currentEnergy = maxEnergy;
@@ -26,28 +27,46 @@ public abstract class BasicBeeController {
         this.beeView = new BeeView(imagePath, name, startingLocation);
     }
 
+    public boolean isDead() {
+        return dead;
+    }
+
     public boolean move() {
+        if(beeView.isDeleted()) {
+            this.delete();
+            return false;
+        }
+        this.currentEnergy--;
+        if(this.currentEnergy <= 0) {
+            this.die();
+            return false;
+        }
+        this.beeView.updateEnergy(this.currentEnergy * 1.0 / this.maxEnergy);
         this.beeView.move(this.currentLocation);
-        if(this.beeView.collides(this.target)) {
+        if(this.beeView.collides(this.target.getFlowerLocation())) {
             this.exchangeNectar();
             return true;
         } else {
             return false;
         }
-    };
+    }
 
-    public void die() {
+    public void delete() {
         this.dead = true;
-        this.getBeeView().die();
         this.target = null;
     }
 
-    public void setNewTarget(Flower newTarget) {
+    public void die() {
+        this.delete();
+        this.beeView.die();
+    }
+
+    public void setNewTarget(AbstractFlower newTarget) {
         this.target = newTarget;
     }
 
     public void exchangeNectar() {
-        if(!this.beeView.collides(this.target)) {
+        if(!this.beeView.collides(this.target.getFlowerLocation())) {
             return;
         }
         int nectar = this.target.exchangeEnergy(this.currentEnergy);
@@ -63,7 +82,7 @@ public abstract class BasicBeeController {
         }
     }
 
-    public BeeView getBeeView() {
-        return beeView;
+    public Pane getBeeView() {
+        return this.beeView.getView();
     }
 }

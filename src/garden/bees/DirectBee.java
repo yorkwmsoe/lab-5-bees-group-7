@@ -2,7 +2,7 @@ package garden.bees;
 
 import javafx.geometry.Point2D;
 
-public class DirectBee extends BasicBeeController{
+public class DirectBee extends AbstractBee {
 
     public DirectBee(Point2D startingLocation) {
         super(10,100, startingLocation);

@@ -2,11 +2,11 @@ package garden.bees;
 
 import javafx.geometry.Point2D;
 
-public class ManhattanBee extends BasicBeeController{
+public class ManhattanBee extends AbstractBee {
     public ManhattanBee(Point2D startingLocation) {
         super(25, 50, startingLocation);
         String imagePath = "file:bee-2.jpg";
-        String name = "New Yorker Bee";
+        String name = "Manhattan Bee";
         this.createView(imagePath, name, startingLocation);
     }
 

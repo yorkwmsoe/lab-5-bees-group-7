@@ -1,5 +1,8 @@
-package garden;
-public class RemovingNectar implements  NectarExchanger {
+package garden.flowers;
+
+import garden.flowers.NectarExchanger;
+
+public class RemovingNectar implements NectarExchanger {
 
     @Override
     public int exchangeNectar(int beeEnergy, int flowerEnergy) {
