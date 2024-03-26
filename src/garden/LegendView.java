@@ -2,12 +2,10 @@ package garden;
 
 import garden.bees.BeeType;
 import garden.flowers.FlowerType;
-import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -69,12 +67,9 @@ public class LegendView {
         }
         flowerPicture.setPreserveRatio(true);
         flowerPicture.setFitWidth(50.0);
-        flowerPicture.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if(mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                    garden.addFlower(flowerType);
-                }
+        flowerPicture.setOnMouseClicked(mouseEvent -> {
+            if(mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+                garden.addFlower(flowerType);
             }
         });
         flowerInfo.getChildren().addAll(flowerName, flowerPicture, flowerDescription);
@@ -108,12 +103,9 @@ public class LegendView {
         }
         beeImage.setPreserveRatio(true);
         beeImage.setFitWidth(50.0);
-        beeImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if(mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                    garden.addBee(beeType);
-                }
+        beeImage.setOnMouseClicked(mouseEvent -> {
+            if(mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+                garden.addBee(beeType);
             }
         });
         beeInfo.getChildren().addAll(beeName, beeImage, beeDesc);

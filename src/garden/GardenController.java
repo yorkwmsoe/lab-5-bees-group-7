@@ -14,13 +14,12 @@ public class GardenController {
 
     @FXML
     private Pane theGarden;                 // capture the pane we are drawing on from JavaFX
-    private LegendView legendView;
 
 
     @FXML
     public void initialize() {              // executed after scene is loaded but before any methods
         // for fun, set up a gradient background; could probably do in SceneBuilder as well
-        // note the label has a Z index of 2 so it is drawn above the panel, otherwise it may be displayed "under" the panel and not be visible
+        // note the label has a Z index of 2, so it is drawn above the panel, otherwise it may be displayed "under" the panel and not be visible
         theGarden.setStyle("-fx-background-color: linear-gradient(to bottom right, derive(forestgreen, 20%), derive(forestgreen, -40%));");
         // load image from a file; the file needs to be in the top folder of the project
         Pane gardenArea = new Pane();
@@ -28,10 +27,10 @@ public class GardenController {
         gardenArea.setPrefHeight(600.0);
         garden = new Garden(gardenArea);
         gardenArea.getChildren().add(makeInstructions());
-        legendView = new LegendView(garden);
+        LegendView legendView = new LegendView(garden);
         theGarden.getChildren().add(legendView.getView());
         theGarden.getChildren().add(gardenArea);
-        theGarden.setFocusTraversable(true); // ensure garden pane will receive keypresses
+        theGarden.setFocusTraversable(true); // ensure garden pane will receive key presses
     }
 
     @FXML

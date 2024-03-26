@@ -1,13 +1,11 @@
 package garden.bees;
 
-import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -47,26 +45,15 @@ public class BeeView {
         this.totalView.setLayoutX(startingLocation.getX());
         this.totalView.setLayoutY(startingLocation.getY());
 
-        this.totalView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if(mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
-                    die();
-                }
+        this.totalView.setOnMouseClicked(mouseEvent -> {
+            if(mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+                die();
             }
         });
 
         this.deleted = false;
 
         this.collisionConstant = 10.0 * Math.sqrt(2);
-    }
-
-    public void updateName(String newName) {
-        this.beeName.setText(newName);
-    }
-
-    public void updateImage(String imagePath) {
-        this.beeImage.setImage(new Image(imagePath));
     }
 
     public void updateEnergy(double newEnergyRatio) {

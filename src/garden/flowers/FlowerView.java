@@ -1,13 +1,11 @@
 package garden.flowers;
 
-import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -36,20 +34,17 @@ public class FlowerView {
 
         this.deleted = false;
 
-        this.flowerView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if(mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
-                    flowerView.setVisible(false);
-                    flowerView.setLayoutX(-100);
-                    flowerView.setLayoutY(-100);
-                    flowerView.getChildren().remove(nectarRechargeIndicator);
-                    flowerView.getChildren().remove(flowerImage);
-                    flowerView.getChildren().remove(flowerName);
-                    Pane garden = (Pane) flowerView.getParent();
-                    garden.getChildren().remove(flowerView);
-                    deleted = true;
-                }
+        this.flowerView.setOnMouseClicked(mouseEvent -> {
+            if(mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+                flowerView.setVisible(false);
+                flowerView.setLayoutX(-100);
+                flowerView.setLayoutY(-100);
+                flowerView.getChildren().remove(nectarRechargeIndicator);
+                flowerView.getChildren().remove(flowerImage);
+                flowerView.getChildren().remove(flowerName);
+                Pane garden = (Pane) flowerView.getParent();
+                garden.getChildren().remove(flowerView);
+                deleted = true;
             }
         });
     }

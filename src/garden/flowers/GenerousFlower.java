@@ -15,7 +15,7 @@ public class GenerousFlower extends AbstractFlower {
         int nectarAmount;
         if(this.currentNectar <= 0) {
             nectarAmount = -beeEnergy / 10;
-        } else if (this.currentNectar / 10 <= 0) {
+        } else if (this.currentNectar / 10 == 0) {
             nectarAmount = 1;
         } else {
             nectarAmount = this.currentNectar / 10;
