@@ -12,10 +12,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public class LegendView {
-    Pane totalView;
-    Pane flowerLegend;
-    Pane beeLegend;
-    Garden garden;
+    private final Pane totalView;
+    private final Garden garden;
+
 
 
     public LegendView(Garden garden) {
@@ -34,89 +33,90 @@ public class LegendView {
     }
 
     private void createFlowerLegend() {
-        this.flowerLegend = new VBox();
-        this.flowerLegend.setMaxWidth(150.0);
+        Pane flowerLegend = new VBox();
+        flowerLegend.setMaxWidth(150.0);
 
-        Label balancedFlowerName = new Label("Balanced Flower");
-        ImageView balancedFlowerImage = new ImageView(new Image("file:flower-1.jpg"));
-        balancedFlowerImage.setPreserveRatio(true);
-        balancedFlowerImage.setFitWidth(50.0);
-        balancedFlowerImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        flowerLegend.getChildren().add(createFlowerInfo(FlowerType.BALANCED));
+        flowerLegend.getChildren().add(createFlowerInfo(FlowerType.GENEROUS));
+        flowerLegend.getChildren().add(createFlowerInfo(FlowerType.GREEDY));
+
+        this.totalView.getChildren().add(flowerLegend);
+    }
+
+    private Pane createFlowerInfo(FlowerType flowerType) {
+        Pane flowerInfo = new VBox();
+        Label flowerName = new Label();
+        ImageView flowerPicture = null;
+        Label flowerDescription = new Label();
+
+        switch (flowerType) {
+            case BALANCED -> {
+                flowerName.setText("Balanced Flower");
+                flowerPicture = new ImageView(new Image("file:flower-1.jpg"));
+                flowerDescription.setText("Flower that balances \nnectar with the bee\n\n");
+            }
+            case GENEROUS -> {
+                flowerName.setText("Generous Flower");
+                flowerPicture = new ImageView(new Image("file:flower-2.jpg"));
+                flowerDescription.setText("Flower that gives as much \nnectar as it can\n\n");
+            }
+            case GREEDY -> {
+                flowerName.setText("Greedy Flower");
+                flowerPicture = new ImageView(new Image("file:flower-3.jpg"));
+                flowerDescription.setText("Flower that takes as much \nnectar as it can\n\n");
+            }
+
+        }
+        flowerPicture.setPreserveRatio(true);
+        flowerPicture.setFitWidth(50.0);
+        flowerPicture.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 if(mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                    garden.addFlower(FlowerType.BALANCED);
+                    garden.addFlower(flowerType);
                 }
             }
         });
-        Label balancedFlowerDesc = new Label("Flower that balances \nnectar with the bee\n\n");
-        flowerLegend.getChildren().addAll(balancedFlowerName, balancedFlowerImage, balancedFlowerDesc);
-
-        Label generousFlowerName = new Label("Generous Flower");
-        ImageView generousFlowerImage = new ImageView(new Image("file:flower-2.jpg"));
-        generousFlowerImage.setPreserveRatio(true);
-        generousFlowerImage.setFitWidth(50.0);
-        generousFlowerImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if(mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                    garden.addFlower(FlowerType.GENEROUS);
-                }
-            }
-        });
-        Label generousFlowerDesc = new Label("Flower that gives as much \nnectar as it can\n\n");
-        this.flowerLegend.getChildren().addAll(generousFlowerName, generousFlowerImage, generousFlowerDesc);
-
-        Label greedyFlowerName = new Label("Greedy Flower");
-        ImageView greedyFlowerImage = new ImageView(new Image("file:flower-3.jpg"));
-        greedyFlowerImage.setPreserveRatio(true);
-        greedyFlowerImage.setFitWidth(50.0);
-        greedyFlowerImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if(mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                    garden.addFlower(FlowerType.GREEDY);
-                }
-            }
-        });
-        Label greedyFlowerDesc = new Label("Flower that takes as much \nnectar as it can\n\n");
-        this.flowerLegend.getChildren().addAll(greedyFlowerName, greedyFlowerImage, greedyFlowerDesc);
-        this.totalView.getChildren().add(this.flowerLegend);
+        flowerInfo.getChildren().addAll(flowerName, flowerPicture, flowerDescription);
+        return flowerInfo;
     }
 
     private void createBeeLegend() {
-        this.beeLegend = new VBox();
-        this.beeLegend.setMaxWidth(150.0);
+        Pane beeLegend = new VBox();
+        beeLegend.setMaxWidth(150.0);
 
-        Label directBeeName = new Label("Direct Bee");
-        ImageView directBeeImage = new ImageView(new Image("file:bee-1.jpg"));
-        directBeeImage.setPreserveRatio(true);
-        directBeeImage.setFitWidth(50.0);
-        directBeeImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        beeLegend.getChildren().add(createBeeInfo(BeeType.DIRECT));
+        beeLegend.getChildren().add(createBeeInfo(BeeType.MANHATTAN));
+    }
+
+    private Pane createBeeInfo(BeeType beeType) {
+        Pane beeInfo = new VBox();
+        Label beeName = new Label();
+        ImageView beeImage = null;
+        Label beeDesc = new Label();
+        switch (beeType) {
+            case DIRECT -> {
+                beeName.setText("Direct Bee");
+                beeImage = new ImageView(new Image("file:bee-1.jpg"));
+                beeDesc.setText("Bee that moves in a \nstraight line to target flower\n\n");
+            }
+            case MANHATTAN -> {
+                beeName.setText("Manhattan Bee");
+                beeImage = new ImageView(new Image("file:bee-1.jpg"));
+                beeDesc.setText("Bee that only moves in X \nor Y axis at a time \n(Manhattan Movement)\n\n");
+            }
+        }
+        beeImage.setPreserveRatio(true);
+        beeImage.setFitWidth(50.0);
+        beeImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 if(mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                    garden.addBee(BeeType.DIRECT);
+                    garden.addBee(beeType);
                 }
             }
         });
-        Label directBeeDesc = new Label("Bee that moves in a \nstraight line to target flower\n\n");
-        this.beeLegend.getChildren().addAll(directBeeName, directBeeImage, directBeeDesc);
-
-        Label manhattanBeeName = new Label("Manhattan Bee");
-        ImageView manhattanBeeImage = new ImageView(new Image("file:bee-2.jpg"));
-        manhattanBeeImage.setPreserveRatio(true);
-        manhattanBeeImage.setFitWidth(50.0);
-        manhattanBeeImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if(mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                    garden.addBee(BeeType.MANHATTAN);
-                }
-            }
-        });
-        Label manhattanBeeDesc = new Label("Bee that only moves in X \nor Y axis at a time \n(Manhattan Movement)\n\n");
-        this.beeLegend.getChildren().addAll(manhattanBeeName, manhattanBeeImage, manhattanBeeDesc);
-        this.totalView.getChildren().add(beeLegend);
+        beeInfo.getChildren().addAll(beeName, beeImage, beeDesc);
+        return beeInfo;
     }
 }
